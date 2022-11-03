@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: kubeacademy
+  name: "{{ .Release.Name }}-building-apps-deploy"
+spec:
+  replicas: {{ .Values.deploy.replicas }}
+  selector:
+    matchLabels:
+      app: kubeacademy
+  template:
+    metadata:
+      labels:
+        app: kubeacademy
+    spec:
+      containers:
+      - name: building-apps-container
+        image: "{{ .Values.deploy.image.repository }}:{{ .Chart.AppVersion }}"

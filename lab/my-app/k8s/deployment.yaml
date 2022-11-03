@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: kubeacademy2
+  name: building-apps-deploy2
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: kubeacademy2
+  template:
+    metadata:
+      labels:
+        app: kubeacademy2
+    spec:
+      containers:
+      - name: building-apps-container2
+        image: lruihan/building-apps:0.1
