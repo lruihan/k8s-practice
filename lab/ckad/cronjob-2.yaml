@@ -1,0 +1,30 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: hello
+  namespace: test
+
+spec:
+  schedule: "1 * * * *"
+  startingDeadlineSeconds: 10
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: hello
+            image: busybox:stable
+            imagePullPolicy: IfNotPresent
+            command:
+            - /bin/sh
+            - -c
+            - date
+          restartPolicy: OnFailure
+
+# Switch namespace: kubectl config set-context --current --namespace=test
+# pods=$(kubectl get pods --selector=job-name=cronjob-1-27794225 --output=jsonpath={.items[*].metadata.name})
+# kubectl logs $pods
+# kubectl -n test create job --from=cronjob/cronjob-1 cron-test
+# kubectl get jobs --watch
+# kubectl create cronjob -h
+# kubectl explain cronjob.spec
